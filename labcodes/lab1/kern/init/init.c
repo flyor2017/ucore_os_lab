@@ -15,9 +15,37 @@ static void lab1_switch_test(void);
 
 int
 kern_init(void) {
+	
+	// edata和end这两个变量是在链接时被定义的，这里只是声明。
+	// 定义位置位于 tools/kernel.ld 文件中。
+	
+	
+	/*
+	关于进程在内存中分布的初探：
+	
+	0x00000000																				0xffffffff
+	-------------------------------------------------------------------------------------------------
+	|	|		|				|未初始化	|		|增长方向				增长方向|		|		|
+	|	|代码段	| 初始化的数据	|的数据		|堆heap	|-------> 未分配的内存	<-------|栈stack| kernel|
+	|	|text	| data			|bss		|		|								|		|		|
+	-------------------------------------------------------------------------------------------------
+				^				^			^
+				|				|			|
+			  etext			  edata		  end
+	
+	etext：代码段结束位置
+	edata：已初始化数据结束位置
+	end：未初始化数据结束位置
+	
+	注意在C语言中全局变量赋初值为0的话编译器默认解释为没有赋初值，即其位置将会出现在bss段，而不是data段。
+	
+	*/
     extern char edata[], end[];
+	
+	//将bss段置零
     memset(edata, 0, end - edata);
 
+	
     cons_init();                // init the console
 
     const char *message = "(THU.CST) os is loading ...";

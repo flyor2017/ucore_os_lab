@@ -10,6 +10,10 @@ main(int argc, char *argv[]) {
         fprintf(stderr, "Usage: <input filename> <output filename>\n");
         return -1;
     }
+	
+	//int stat(const char *pathname, struct stat *buf);
+	//这个函数用于获取一个文件的状态信息
+	//执行成功返回0，执行失败返回-1
     if (stat(argv[1], &st) != 0) {
         fprintf(stderr, "Error opening file '%s': %s\n", argv[1], strerror(errno));
         return -1;

@@ -76,8 +76,8 @@ cga_init(void) {
     }
 
     // Extract cursor location
-    // 6845索引寄存器的index 0x0E（及十进制的14）== 光标位置(高位)
-    // 6845索引寄存器的index 0x0F（及十进制的15）== 光标位置(低位)
+    // 6845索引寄存器的index 0x0E（即十进制的14）== 光标位置(高位)
+    // 6845索引寄存器的index 0x0F（即十进制的15）== 光标位置(低位)
     // 6845 reg 15 : Cursor Address (Low Byte)
     uint32_t pos;
     outb(addr_6845, 14);                                        
